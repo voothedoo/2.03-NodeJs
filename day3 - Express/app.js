@@ -12,8 +12,7 @@ app.listen(PORT, () => {
   console.log("Server running on http://localhost:3000");
 });
 
-const api = parseInt(process.env.API_KEY);
-console.log(api);
+const api = process.env.API_KEY;
 
 //routing
 app.get("/", (req, res) => {

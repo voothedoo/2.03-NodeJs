@@ -1,0 +1,5 @@
+to use the API key please update the .env_sample file 
+
+1. in it add your Key to  API_KEY = <your key here>
+
+2. change the file name from .env_sample to .env
