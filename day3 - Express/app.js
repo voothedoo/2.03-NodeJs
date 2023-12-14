@@ -30,6 +30,10 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
+app.get("/info", (req, res) => {
+  res.render("info");
+});
+
 const checkApi = (req, res, next) => {
   if (req.params.api === api) {
     next();
@@ -54,8 +58,6 @@ app.use(`/:api/recipe/:name`, checkApi, (req, res, next) => {
     return res.send(recipe);
   }
   next();
-
-
 });
 
 app.use(`/:api/recipe/:cuisine`, checkApi, (req, res, next) => {
@@ -76,7 +78,6 @@ app.use(`/:api/recipe/ingredients/:ingredients`, checkApi, (req, res, next) => {
     return res.send(recipe);
   }
   next();
-
 });
 
 app.use(`/:api/recipe/favorites`, checkApi, (req, res, next) => {
@@ -85,7 +86,6 @@ app.use(`/:api/recipe/favorites`, checkApi, (req, res, next) => {
     return res.send(recipe);
   }
   next();
-
 });
 
 app.use((req, res) => {
