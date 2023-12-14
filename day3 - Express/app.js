@@ -4,6 +4,7 @@ import recipes from "./recipes.js";
 
 const PORT = 3000;
 const app = express();
+const api = process.env.API_KEY;
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -11,8 +12,6 @@ app.use(express.json());
 app.listen(PORT, () => {
   console.log("Server running on http://localhost:3000");
 });
-
-const api = process.env.API_KEY;
 
 //routing
 app.get("/", (req, res) => {
@@ -104,7 +103,6 @@ app.use(`/:api/recipe/favorites`, (req, res, next) => {
   } else {
     res.status(403).json({ error: "Access denied. Incorrect API key" });
   }
-
 });
 
 app.use((req, res) => {
