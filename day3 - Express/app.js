@@ -31,50 +31,80 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-app.use(`/${api}/recipe/:id`, (req, res, next) => {
+app.use(`/:api/recipe/:id`, (req, res, next) => {
+  let providedApi = req.params.api;
   const recipeId = parseInt(req.params.id);
-  const recipe = recipes.find(recipe => recipe.id === recipeId);
-  if (recipe) {
-    return res.send(recipe);
+  if (providedApi === api) {
+    const recipe = recipes.find(recipe => recipe.id === recipeId);
+    if (recipe) {
+      return res.send(recipe);
+    }
+    next();
+  } else {
+    res.status(403).json({ error: "Access denied. Incorrect API key" });
   }
-  next();
+
 });
 
-app.use(`/${api}/recipe/:name`, (req, res, next) => {
+app.use(`/:api/recipe/:name`, (req, res, next) => {
+  let providedApi = req.params.api;
   const recipeName = req.params.name.toLowerCase();
-  const recipe = recipes.filter(recipe => recipe.name.toLowerCase().includes(recipeName));
-  if (recipe.length > 0) {
-    return res.send(recipe);
+  if (providedApi === api) {
+    const recipe = recipes.filter(recipe => recipe.name.toLowerCase().includes(recipeName));
+    if (recipe.length > 0) {
+      return res.send(recipe);
+    }
+    next();
+  } else {
+    res.status(403).json({ error: "Access denied. Incorrect API key" });
   }
-  next();
+
 });
 
-app.use(`/${api}/recipe/:cuisine`, (req, res, next) => {
+app.use(`/:api/recipe/:cuisine`, (req, res, next) => {
+  let providedApi = req.params.api;
   const cuisineName = req.params.cuisine.toLowerCase();
-  const recipe = recipes.filter(recipe => recipe.cuisine.toLowerCase().includes(cuisineName));
-  if (recipe.length > 0) {
-    return res.send(recipe);
+  if (providedApi === api) {
+    const recipe = recipes.filter(recipe => recipe.cuisine.toLowerCase().includes(cuisineName));
+    if (recipe.length > 0) {
+      return res.send(recipe);
+    }
+    next();
+  } else {
+    res.status(403).json({ error: "Access denied. Incorrect API key" });
   }
-  next();
+
 });
 
-app.use(`/${api}/recipe/ingredients/:ingredients`, (req, res, next) => {
+app.use(`/:api/recipe/ingredients/:ingredients`, (req, res, next) => {
+  let providedApi = req.params.api;
   const ingredientsName = req.params.ingredients.toLowerCase();
-  const recipe = recipes.filter(recipe =>
-    recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(ingredientsName))
-  );
-  if (recipe.length > 0) {
-    return res.send(recipe);
+  if (providedApi === api) {
+    const recipe = recipes.filter(recipe =>
+      recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(ingredientsName))
+    );
+    if (recipe.length > 0) {
+      return res.send(recipe);
+    }
+    next();
+  } else {
+    res.status(403).json({ error: "Access denied. Incorrect API key" });
   }
-  next();
+
 });
 
-app.use(`/${api}/recipe/favorites`, (req, res, next) => {
-  const recipe = recipes.filter(recipe => recipe.favorite === true);
-  if (recipe.length > 0) {
-    return res.send(recipe);
+app.use(`/:api/recipe/favorites`, (req, res, next) => {
+  let providedApi = req.params.api;
+  if (providedApi === api) {
+    const recipe = recipes.filter(recipe => recipe.favorite === true);
+    if (recipe.length > 0) {
+      return res.send(recipe);
+    }
+    next();
+  } else {
+    res.status(403).json({ error: "Access denied. Incorrect API key" });
   }
-  next();
+
 });
 
 app.use((req, res) => {
