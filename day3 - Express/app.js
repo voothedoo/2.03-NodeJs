@@ -88,6 +88,7 @@ app.use(`/:api/recipe/favorites`, checkApi, (req, res, next) => {
   next();
 });
 
+
 app.use((req, res) => {
   res.status(404).render("404");
 });
